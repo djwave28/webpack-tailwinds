@@ -33,8 +33,10 @@ var glob = require('glob-all');
 
 
 const PATHS = {
-    src: path.join(__dirname, 'src')
+    src: path.join(__dirname, 'src'),
+    views: path.join(__dirname, 'views'),
 }
+
 
 //
 module.exports = {
@@ -92,6 +94,7 @@ module.exports = {
     /** Adding plugins */
     plugins: [
 
+        /** Extracting the compiled embedded css to a seperate file */
         new MiniCssExtractPlugin({
 
             filename: '[name].css',
@@ -99,11 +102,15 @@ module.exports = {
 
         }),
 
+        /** Scanning files for used styles | id's and classes */
         new PurgecssPlugin({
 
+
+            /** also added a views folder */
             paths: glob.sync([
                 `${PATHS.src}/**/*`,
-                'index.php'
+                './index.php',
+                `${PATHS.views}/**/*.php`
             ]),
 
         }),
