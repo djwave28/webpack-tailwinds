@@ -10,7 +10,7 @@
         <?php
         echo "php active";
         ?>
-        <div class="myUniqueClass my-48">Example div class myUniqueClass</div>
+        <div class="myUniqueClass my-48 p-16">Example div class myUniqueClass</div>
         
         <script src="./dist/main.js"></script>
     </body>

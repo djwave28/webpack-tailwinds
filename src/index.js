@@ -14,3 +14,6 @@ function component() {
 }
 
 document.body.appendChild(component());
+
+
+console.log("hello webpack dev");

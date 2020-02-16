@@ -11,7 +11,7 @@ const PATHS = {
 
 //
 module.exports = {
-    mode: 'production',
+    mode: 'development',
 
     /**
      * The entry point can also be an array with a path resolve
