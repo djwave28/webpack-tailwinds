@@ -1,0 +1,22 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+
+$base-color: orange;
+
+body {
+    font-size:20px;
+    color:$base-color;
+    
+}
+
+.myUniqueClass {
+    background-color: purple;
+    color:#fff;
+    width: 300px;
+    padding:5px;
+    user-select: none; 
+}
