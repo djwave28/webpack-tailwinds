@@ -1,16 +1,51 @@
+/**
+ * Web Pack Configuration
+ * 
+ * Documented configuration file for Web Pack with the use of TailwindsCSS
+ * 
+ * 
+ * 
+ * 
+ * Contains: 
+ * - Standard web pack behavior for JS files, with embedded style imports
+ * 
+ * Extensions:
+ * - Added processing for SASS 
+ * - Extraction CSS to seperate file
+ * - PostCSS for prefixing CSS
+ * - Purge CSS to delete unused styles
+ * 
+ * TailwindsCSS is included in postcss.config.js
+ * 
+ * 
+ */
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const PurgecssPlugin = require('purgecss-webpack-plugin')
 const glob = require('glob-all');
 
-/** Chokidar attempt | experimental */
+/** Modules for extracting CSS */
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+/** PurgeCSS for production environment */
+const PurgecssPlugin = require('purgecss-webpack-plugin')
+
+
+/** Chokidar for watching PHP files. | experimental */
 const chokidar = require('chokidar');
+/** Web Pack for using native plugins */
 const webpack = require('webpack');
+
+
+/** Setting constant variables */
+
+const URI = 'http://webpack-tailwinds.local';
 
 const PATHS = {
     src: path.join(__dirname, 'src'),
     views: path.join(__dirname, 'views'),
 }
+
+
+
+
 
 //
 module.exports = {
