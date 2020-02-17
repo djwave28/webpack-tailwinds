@@ -1,8 +1,11 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin')
-var glob = require('glob-all');
+const glob = require('glob-all');
 
+/** Chokidar attempt | experimental */
+const chokidar = require('chokidar');
+const webpack = require('webpack');
 
 const PATHS = {
     src: path.join(__dirname, 'src'),
@@ -20,19 +23,23 @@ module.exports = {
 
     entry: {
         'main': [
-            path.resolve(__dirname, './src/index.js')
-        ],
+            path.resolve(__dirname, './src/index.js'),
+
+        ]
     },
 
     /** Name the output file and set the publishing path */
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        /** set public path for the dev server */
+        publicPath: 'http://webpack-tailwinds.local:8080/dist/'
     },
 
     /** loading modules | loaders */
     module: {
         rules: [
+
             {
                 test: /\.s[ac]ss$/i,
                 use: [
@@ -75,16 +82,94 @@ module.exports = {
         }),
 
         /** Scanning files for used styles | id's and classes */
-        new PurgecssPlugin({
+        // new PurgecssPlugin({
 
-            paths: glob.sync([
-                `${PATHS.src}/**/*`,
-                './index.php',
-                `${PATHS.views}/**/*.php`
-            ]),
+        //     paths: glob.sync([
+        //         `${PATHS.src}/**/*`,
+        //         './index.html',
+        //         './index.php',
+        //         `${PATHS.views}/**/*.html`
+        //     ]),
 
-        }),
+        // }),
+
+        new webpack.NamedModulesPlugin(),
+        // new webpack.HotModuleReplacementPlugin()
+        // new HtmlWebpackPlugin(),
 
     ],
 
-};
+
+
+
+    /**
+     * Dev Server
+     * 
+     * Lets the project run in a development server.
+     * 
+     * Default the dev server runs default on localhost:8080. To run 
+     * with PHP the dev server can be configured to run within its 
+     * own server. In this example 'webpack-tailwinds.local'
+     * 
+     * The dev server can be configured with a port (example: 8080)
+     * 
+     * Set the publicPath in output:
+     * publicPath: 'http://webpack-tailwinds.local:8080/dist/'
+     * 
+     * This wil make sure that the JS and CSS files are served from memory
+     * 
+     */
+    devServer: {
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        // watchContentBase: true,
+        // contentBase: path.resolve(__dirname, "dist"),
+        host: 'webpack-tailwinds.local',
+        port: 8080,
+        open: true,
+        writeToDisk: false,
+        /**  hot: true, */
+        compress: true,
+        index: './index.php',
+        public: 'webpack-tailwinds.local:8080',
+        proxy: {
+            '*': {
+                target: 'http://webpack-tailwinds.local',
+                changeOrigin: true,
+                secure: false
+            }
+        },
+
+
+
+        /**
+         * Chokidar module, for monitoring php files
+         * 
+         * The module will push the content ofd the php file, but it 
+         * will not compile tailwinds for scanning of classes.
+         * 
+         * Solution: do not purge css in development
+         * 
+         * 
+         * @param {*} app 
+         * @param {*} server 
+         */
+        before(app, server) {
+            const files = [
+                "./**/*.php",
+            ];
+            chokidar.watch(files, {
+                alwaysStat: true,
+                atomic: false,
+                followSymlinks: false,
+                ignoreInitial: true,
+                ignorePermissionErrors: true,
+                persistent: true,
+                usePolling: true
+            })
+                .on('all', () => {
+                    server.sockWrite(server.sockets, "content-changed");
+                });
+        }
+
+    }
+}

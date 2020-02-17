@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 
-$base-color: orange;
+$base-color: rgb(22, 134, 56);
 
 body {
     font-size: 20px;
@@ -14,10 +14,12 @@ body {
 }
 
 .myUniqueClass {
-    background-color: rgb(59, 38, 52);
+     background-color: rgb(59, 38, 52); 
     color: #fff;
     width: 300px;
     padding: 5px;
     user-select: none;
 }
+
+
 
