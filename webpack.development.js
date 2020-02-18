@@ -1,17 +1,25 @@
 /**
- * Web Pack Configuration
+ * Web Pack Configuration | Development
+ * 
+ * Documented configuration file for Web Pack with the use of TailwindsCSS
+ * 
+ * * 
  * 
  * Contains: 
  * - Standard web pack behavior for JS files, with embedded style imports
  * 
- * Extended with:
+ * Extensions:
  * - Added processing for SASS 
  * - Extraction CSS to seperate file
  * - PostCSS for prefixing CSS
- * - Dev server configuration
- * - Chokidar to watch php files
+ * - Purge CSS to delete unused styles
  * 
  * TailwindsCSS is included in postcss.config.js
+ * 
+ * Note:
+ * No PurgeCSS is applied. This is only for production. During development 
+ * all classes that ship with Tailwinds must be asvailable during development
+ * 
  * 
  */
 const path = require('path');
@@ -31,7 +39,7 @@ const webpack = require('webpack');
 
 /** Setting constant variables */
 
-const URI = 'http://webpack-tailwinds.local';
+const DOMAIN = 'webpack-tailwinds.local';
 
 const PATHS = {
     src: path.join(__dirname, 'src'),
@@ -63,7 +71,7 @@ module.exports = {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
         /** set public path for the dev server */
-        publicPath: 'http://webpack-tailwinds.local:8080/dist/'
+        publicPath: `http://${DOMAIN}:8080/dist/`
     },
 
     /** loading modules | loaders */
@@ -111,20 +119,9 @@ module.exports = {
 
         }),
 
-        /** Scanning files for used styles | id's and classes */
-        // new PurgecssPlugin({
-
-        //     paths: glob.sync([
-        //         `${PATHS.src}/**/*`,
-        //         './index.html',
-        //         './index.php',
-        //         `${PATHS.views}/**/*.html`
-        //     ]),
-
-        // }),
 
         new webpack.NamedModulesPlugin(),
-        // new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin()
         // new HtmlWebpackPlugin(),
 
     ],
@@ -153,17 +150,17 @@ module.exports = {
         headers: { 'Access-Control-Allow-Origin': '*' },
         // watchContentBase: true,
         // contentBase: path.resolve(__dirname, "dist"),
-        host: 'webpack-tailwinds.local',
+        host: `${DOMAIN}`,
         port: 8080,
         open: true,
         writeToDisk: false,
         /**  hot: true, */
         compress: true,
         index: './index.php',
-        public: 'webpack-tailwinds.local:8080',
+        public: `${DOMAIN}:8080`,
         proxy: {
             '*': {
-                target: 'http://webpack-tailwinds.local',
+                target: `http://${DOMAIN}`,
                 changeOrigin: true,
                 secure: false
             }

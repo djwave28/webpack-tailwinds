@@ -4,11 +4,8 @@
     "description": "",
     "private": true,
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "webpack",
-        "watch": "webpack --watch --info-verbosity verbose --progress",
-        "start": "webpack-dev-server --entry ./src/index.js  --output-filename ./dist/main.js --open",
-        "dev": "webpack-dev-server"
+        "build": "webpack --mode production --progress --config webpack.production.js",
+        "watch": "webpack-dev-server --open --watch --info-verbosity verbose --progress --config webpack.development.js"
     },
     "keywords": [],
     "author": "",
