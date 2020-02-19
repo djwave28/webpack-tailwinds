@@ -3,12 +3,14 @@
 
 Webpack configurations with Tailwinds + PHP
 
+
 There are two configuration files in this repo. 
 
 - webpack.development.js
 - webpack.production.js
 
 
+## webpack.development
 To run webpack in a PHP environment, such environment must be provided with a webserver like Apache.
 
 The  configuration file webpack.development.js is configured with:
@@ -16,146 +18,23 @@ The  configuration file webpack.development.js is configured with:
 - Babel
 - Sass
 - PostCSS
-- DevServer
+- devServer
 - Chokidar File Watcher
 
+The development config will launch the DevServer in teh memory (RAM).
+To run the devServer with PHP, the domain needs to be to a running PHP config.
 
-Here's the code:
-
-
-```js
-
-const path = require('path');
-const glob = require('glob-all');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const chokidar = require('chokidar');
-const webpack = require('webpack');
-const DOMAIN = 'webpack-tailwinds.local';
-const PATHS = {
-    src: path.join(__dirname, 'src'),
-    views: path.join(__dirname, 'views'),
-}
-
-module.exports = {
-    mode: 'development',
-    entry: {
-        'main': [
-            path.resolve(__dirname, './src/index.js'),
-
-        ]
-    },
-
-     output: {
-        filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
-        /** set public path for the dev server */
-        publicPath: `http://${DOMAIN}:8080/dist/`
-    },
-
-    module: {
-        rules: [
-
-            {
-                test: /\.s[ac]ss$/i,
-                use: [
-
-                    MiniCssExtractPlugin.loader,
-
-
-                    { loader: "css-loader" },
-
-
-                    { loader: "sass-loader" },
-
-
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true,
-                            config: {
-                                path: 'postcss.config.js'
-                            }
-                        }
-                    },
-
-
-                ]
-
-            },
-
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                options: {
-                    presets: ["@babel/preset-env"]
-                }
-            }
-        ]
-    },
-
-    plugins: [
-
-        new MiniCssExtractPlugin({
-
-            filename: '[name].css',
-            chunkFilename: '[id].css',
-
-        }),
-
-
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
-
-
-    ],
+In this example file a server is set up with domain `webpack-tailwinds.local`. Change this to match your domain.
 
 
 
-    devServer: {
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        host: `${DOMAIN}`,
-        port: 8080,
-        open: true,
-        writeToDisk: false,
-        /**  hot: true, */
-        compress: true,
-        index: './index.php',
-        public: `${DOMAIN}:8080`,
-        proxy: {
-            '*': {
-                target: `http://${DOMAIN}`,
-                changeOrigin: true,
-                secure: false
-            }
-        },
-
-        before(app, server) {
-            const files = [
-                "./**/*.php",
-            ];
-            chokidar.watch(files, {
-                alwaysStat: true,
-                atomic: false,
-                followSymlinks: false,
-                ignoreInitial: true,
-                ignorePermissionErrors: true,
-                persistent: true,
-                usePolling: true
-            })
-                .on('all', () => {
-                    server.sockWrite(server.sockets, "content-changed");
-                });
-        }
-
-    }
-}
-```
-
+## webpack.production
 The  configuration file webpack.production.js is configured with:
 
 - Babel
 - Sass
 - PostCSS
 - PurgeCSS
+
+This configuration is building the files. in the `./dist` folder. The production connfig is missing the `devServer`, but does have the PurgeCSS feature to scrape the unneeded CSS.
 
