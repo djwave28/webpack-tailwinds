@@ -27,9 +27,6 @@ const glob = require('glob-all');
 
 /** Modules for extracting CSS */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-/** PurgeCSS for production environment */
-const PurgecssPlugin = require('purgecss-webpack-plugin')
-
 
 /** Chokidar for watching PHP files. | experimental */
 const chokidar = require('chokidar');
@@ -78,6 +75,7 @@ module.exports = {
     module: {
         rules: [
 
+            /** loading setup for CSS|SASS */
             {
                 test: /\.s[ac]ss$/i,
                 use: [
@@ -105,6 +103,16 @@ module.exports = {
                 ]
 
             },
+
+            /** loading setup for JS with Babel*/
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: ["@babel/preset-env"]
+                }
+            }
         ]
     },
 

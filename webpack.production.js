@@ -52,6 +52,7 @@ module.exports = {
     module: {
         rules: [
 
+            /** loading setup for CSS|SASS */
             {
                 test: /\.s[ac]ss$/i,
                 use: [
@@ -79,6 +80,17 @@ module.exports = {
                 ]
 
             },
+
+             /** loading setup for JS with Babel*/
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: ["@babel/preset-env"]
+                }
+            }
+
         ]
     },
 
