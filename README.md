@@ -17,7 +17,7 @@ The  configuration file webpack.development.js is configured with:
 
 - Babel
 - Sass
-- PostCSS
+- PostCSS (autoprefixer)
 - devServer
 - Chokidar File Watcher
 
@@ -32,7 +32,7 @@ The  configuration file webpack.production.js is configured with:
 
 - Babel
 - Sass
-- PostCSS
+- PostCSS (autoprefixer)
 - PurgeCSS
 
 This configuration is building the files. in the `./dist` folder. The production connfig is missing the `devServer`, but does have the PurgeCSS feature to scrape the unneeded CSS.
