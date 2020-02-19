@@ -21,8 +21,7 @@ The  configuration file webpack.development.js is configured with:
 
 
 
-`
-const path = require('path');
+`const path = require('path');
 const glob = require('glob-all');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const chokidar = require('chokidar');
