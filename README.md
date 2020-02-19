@@ -20,16 +20,17 @@ The  configuration file webpack.development.js is configured with:
 - Chokidar File Watcher
 
 
+Here's the code:
 
-`const path = require('path');
+
+```js
+
+const path = require('path');
 const glob = require('glob-all');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const chokidar = require('chokidar');
 const webpack = require('webpack');
-
-
 const DOMAIN = 'webpack-tailwinds.local';
-
 const PATHS = {
     src: path.join(__dirname, 'src'),
     views: path.join(__dirname, 'views'),
@@ -148,7 +149,8 @@ module.exports = {
         }
 
     }
-}`
+}
+```
 
 The  configuration file webpack.production.js is configured with:
 
