@@ -21,10 +21,7 @@ The  configuration file webpack.development.js is configured with:
 - devServer
 - Chokidar File Watcher
 
-The development config will launch the DevServer in the memory (RAM). To run the devServer with PHP, the domain needs to be to a running PHP config.
-Updates to are pushed live.
-
-In this example file a server is set up with domain `webpack-tailwinds.local`. Change this to match your domain.
+The development config will launch the DevServer in the memory (RAM). To run the devServer with PHP, the domain needs to be to a running PHP config. Updates to are pushed live. In this example file a server is set up with domain `webpack-tailwinds.local`. Change this to match your domain.
 
 
 ## webpack.production
