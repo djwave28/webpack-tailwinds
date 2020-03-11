@@ -1,51 +1,23 @@
 /**
  * Web Pack Configuration | Production
  * 
- * Contains: 
- * - Standard web pack behavior for JS files, with embedded style imports
+ * Compiles source file and push to the distribution
+ * folder. CSS is extracted and purged from unneeded 
+ * styles.
  * 
- * Extended with:
- * - Added processing for SASS 
- * - Extraction CSS to seperate file
- * - PostCSS for prefixing CSS
- * - Purge CSS to delete unused styles
- * 
- * TailwindsCSS is included in postcss.config.js
- * 
+ * Configuration for Tailwinds in postcss.config.js
  */
 const path = require('path');
 const glob = require('glob-all');
-/** Module for extracting CSS */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-/** PurgeCSS for production environment */
 const PurgecssPlugin = require('purgecss-webpack-plugin')
-/** Setting path and uri constant variables */
-const PATHS = {
-    src: path.join(__dirname, 'src'),
-    views: path.join(__dirname, 'views'),
-    dist: path.join(__dirname, 'dist'),
 
-}
-
-
-
-
-//
-module.exports = {
-
-    /** The entry array. Multiple files will be concatenated. */
-    entry: {
-        'main': [
-            path.resolve(__dirname, './src/index.js'),
-            // path.resolve(__dirname, `${PATHS.src}/index.js`),
-
-        ]
-    },
+module.exports = (env) => ({
 
     /** Name the output file and set the publishing path */
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, `${env.dist}`)
     },
 
     /** loading modules | loaders */
@@ -60,10 +32,14 @@ module.exports = {
                     MiniCssExtractPlugin.loader,
 
 
-                    { loader: "css-loader" },
+                    {
+                        loader: "css-loader"
+                    },
 
 
-                    { loader: "sass-loader" },
+                    {
+                        loader: "sass-loader"
+                    },
 
 
                     {
@@ -74,14 +50,14 @@ module.exports = {
                                 path: 'postcss.config.js'
                             }
                         }
-                    },
+                    }
 
 
                 ]
 
             },
 
-             /** loading setup for JS with Babel*/
+            /** loading setup for JS with Babel*/
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -101,7 +77,7 @@ module.exports = {
         new MiniCssExtractPlugin({
 
             filename: '[name].css',
-            chunkFilename: '[id].css',
+            chunkFilename: '[id].css'
 
         }),
 
@@ -109,17 +85,13 @@ module.exports = {
         new PurgecssPlugin({
 
             paths: glob.sync([
-                './src/**/*',
-                // `${PATHS.src}/**/*`,
-                './index.html',
-                './index.php',
+                "./pages/**/*.php",
                 './views/a**/*.php'
-                // `${PATHS.views}/**/*.html`
-            ]),
+            ])
 
-        }),
+        })
 
-    ],
+    ]
 
 
-}
+});

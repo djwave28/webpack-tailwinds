@@ -4,13 +4,15 @@
     "description": "",
     "private": true,
     "scripts": {
-        "production": "webpack --mode production --progress --config webpack.production.js",
-        "build": "webpack --mode development --progress --config webpack.production.js",
-        "watch": "webpack-dev-server --open --watch --info-verbosity verbose --progress --config webpack.development.js",
-        "start": "webpack --mode development --config webpack.production.js"
+        "production": "webpack --env.mode production --progress --env.config production",
+        "build": "webpack --env.mode development --progress --env.config production",
+        "watch": "webpack-dev-server --env.mode development --env.config development --open --watch --info-verbosity verbose --progress",
+        "start": "webpack-dev-server --env.mode development --env.config development --open --watch",
+        "quiet": "webpack-dev-server --env.mode development --env.config development --open --watch --env.stats none",
+        "verbose": "webpack-dev-server --env.mode development --env.config development --open --watch --env.stats verbose"
     },
     "keywords": [],
-    "author": "",
+    "author": "Daniel Jongeling",
     "license": "ISC",
     "devDependencies": {
         "@babel/core": "^7.8.4",
@@ -18,6 +20,7 @@
         "autoprefixer": "^9.7.4",
         "babel-loader": "^8.0.6",
         "chokidar": "^3.3.1",
+        "cross-env": "^7.0.1",
         "css-loader": "^3.4.2",
         "glob-all": "^3.1.0",
         "html-webpack-plugin": "^3.2.0",
@@ -29,7 +32,8 @@
         "tailwindcss": "^1.2.0",
         "webpack": "^4.41.6",
         "webpack-cli": "^3.3.11",
-        "webpack-dev-server": "^3.10.3"
+        "webpack-dev-server": "^3.10.3",
+        "webpack-merge": "^4.2.2"
     },
     "dependencies": {
         "lodash": "^4.17.15"

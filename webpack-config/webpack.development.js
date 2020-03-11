@@ -1,74 +1,46 @@
 /**
  * Web Pack Configuration | Development
  * 
- * Documented configuration file for Web Pack with the use of TailwindsCSS
+ * Compiles source file and push to output in memory. The JS file
+ * is served from the LiveServer path at port 8080.
  * 
- * * 
+ * Import CSS and Sass in source file:
+ * example: import sass from './style.scss';
  * 
- * Contains: 
- * - Standard web pack behavior for JS files, with embedded style imports
+ * Dependencies: 
+ * Chikidar         -   Hot push of changes in PHP files
+ * PostCSS          -   Prefixing and Tailwinds CSS
+ * MiniCssExtract   -   Extracting to file
  * 
- * Extensions:
- * - Added processing for SASS 
- * - Extraction CSS to seperate file
- * - PostCSS for prefixing CSS
- * - Purge CSS to delete unused styles
+ * !!IMPORTANT:
+ * The assets are serverd from the live server at port 8080. The assets
+ * must be linked correctly to the HTML file in order to function as
+ * intended. Makes sure the domain is set up.
  * 
- * TailwindsCSS is included in postcss.config.js
+ *  http://domain.com:8080/dist
  * 
- * Note:
- * No PurgeCSS is applied. This is only for production. During development 
- * all classes that ship with Tailwinds must be asvailable during development
+ * Configure the domain and dist folder in webpack.config.js
  * 
+ * Commands:
+ * - npm run build
+ * - nmp run production
  * 
  */
 const path = require('path');
-const glob = require('glob-all');
-
-/** Modules for extracting CSS */
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-/** Chokidar for watching PHP files. | experimental */
 const chokidar = require('chokidar');
-/** Web Pack for using native plugins */
 const webpack = require('webpack');
 
-
-/** Setting constant variables */
-
-const DOMAIN = 'webpack-tailwinds.local';
-
-const PATHS = {
-    src: path.join(__dirname, 'src'),
-    views: path.join(__dirname, 'views'),
-}
-
-
-
-
-
-//
-module.exports = {
-    mode: 'development',
-
-
-    /**
-     * The entry point can also be an array with a path resolve
-     */
-
-    entry: {
-        'main': [
-            path.resolve(__dirname, './src/index.js'),
-
-        ]
-    },
+module.exports = (env) => ({
+    stats: env.stats,
 
     /** Name the output file and set the publishing path */
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, env.dist),
         /** set public path for the dev server */
-        publicPath: `http://${DOMAIN}:8080/dist/`
+        publicPath: `http://${env.domain}:8080/${env.dist}/`
+
     },
 
     /** loading modules | loaders */
@@ -82,11 +54,14 @@ module.exports = {
 
                     MiniCssExtractPlugin.loader,
 
+                    {
+                        loader: "css-loader"
+                    },
 
-                    { loader: "css-loader" },
 
-
-                    { loader: "sass-loader" },
+                    {
+                        loader: "sass-loader"
+                    },
 
 
                     {
@@ -116,17 +91,16 @@ module.exports = {
         ]
     },
 
-    /** Adding plugins */
+    /** Additional plugins */
     plugins: [
 
         /** Extracting the compiled embedded css to a seperate file */
         new MiniCssExtractPlugin({
 
-            filename: '[name].css',
-            chunkFilename: '[id].css',
+            filename: '[name].css'
+            // chunkFilename: '[id].css',
 
         }),
-
 
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
@@ -148,27 +122,27 @@ module.exports = {
      * 
      * The dev server can be configured with a port (example: 8080)
      * 
-     * Set the publicPath in output:
-     * publicPath: 'http://webpack-tailwinds.local:8080/dist/'
      * 
      * This wil make sure that the JS and CSS files are served from memory
      * 
      */
     devServer: {
-        headers: { 'Access-Control-Allow-Origin': '*' },
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
         // watchContentBase: true,
         // contentBase: path.resolve(__dirname, "dist"),
-        host: `${DOMAIN}`,
+        host: `${env.domain}`,
         port: 8080,
         open: true,
         writeToDisk: false,
-        /**  hot: true, */
+        //  hot: true, 
         compress: true,
         index: './index.php',
-        public: `${DOMAIN}:8080`,
+        public: `${env.domain}:8080`,
         proxy: {
             '*': {
-                target: `http://${DOMAIN}`,
+                target: `http://${env.domain}`,
                 changeOrigin: true,
                 secure: false
             }
@@ -193,18 +167,18 @@ module.exports = {
                 "./**/*.php",
             ];
             chokidar.watch(files, {
-                alwaysStat: true,
-                atomic: false,
-                followSymlinks: false,
-                ignoreInitial: true,
-                ignorePermissionErrors: true,
-                persistent: true,
-                usePolling: true
-            })
+                    alwaysStat: true,
+                    atomic: false,
+                    followSymlinks: false,
+                    ignoreInitial: true,
+                    ignorePermissionErrors: true,
+                    persistent: true,
+                    usePolling: true
+                })
                 .on('all', () => {
                     server.sockWrite(server.sockets, "content-changed");
                 });
         }
 
     }
-}
+});
