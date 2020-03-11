@@ -29,6 +29,9 @@ module.exports = env => {
 
     /** Set domain of local site */
     env.domain = 'webpack-tailwinds.local';
+    
+    /** Set root dir */
+    env.dirname = path.resolve(__dirname);
 
     return webpackMerge(
 

@@ -37,7 +37,7 @@ module.exports = (env) => ({
     /** Name the output file and set the publishing path */
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, env.dist),
+        path: path.resolve(env.dirname, env.dist),
         /** set public path for the dev server */
         publicPath: `http://${env.domain}:8080/${env.dist}/`
 

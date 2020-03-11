@@ -17,7 +17,7 @@ module.exports = (env) => ({
     /** Name the output file and set the publishing path */
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, `${env.dist}`)
+        path: path.resolve(env.dirname, `${env.dist}`)
     },
 
     /** loading modules | loaders */
