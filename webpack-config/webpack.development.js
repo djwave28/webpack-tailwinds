@@ -72,7 +72,7 @@ module.exports = (env) => ({
                                 path: 'postcss.config.js'
                             }
                         }
-                    },
+                    }
 
 
                 ]
@@ -167,14 +167,14 @@ module.exports = (env) => ({
                 "./**/*.php",
             ];
             chokidar.watch(files, {
-                    alwaysStat: true,
-                    atomic: false,
-                    followSymlinks: false,
-                    ignoreInitial: true,
-                    ignorePermissionErrors: true,
-                    persistent: true,
-                    usePolling: true
-                })
+                alwaysStat: true,
+                atomic: false,
+                followSymlinks: false,
+                ignoreInitial: true,
+                ignorePermissionErrors: true,
+                persistent: true,
+                usePolling: true
+            })
                 .on('all', () => {
                     server.sockWrite(server.sockets, "content-changed");
                 });

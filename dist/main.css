@@ -5,16 +5,25 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
+html {
+  line-height: 1.15;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */ }
 
 /* Sections
    ========================================================================== */
 /**
  * Remove the margin in all browsers.
  */
+body {
+  margin: 0; }
 
 /**
  * Render the `main` element consistently in IE.
  */
+main {
+  display: block; }
 
 /**
  * Correct the font size and margin on `h1` elements within `section` and
@@ -38,6 +47,8 @@
 /**
  * Remove the gray background on active links in IE 10.
  */
+a {
+  background-color: transparent; }
 
 /**
  * 1. Remove the bottom border in Chrome 57-
@@ -168,6 +179,9 @@
  * Removes the default spacing and border for appropriate elements.
  */
 
+p {
+  margin: 0; }
+
 /**
  * Work around a Firefox/IE bug where the transparent `button` background
  * results in a loss of the default `button` focus styles.
@@ -182,6 +196,11 @@
  * 2. Use Tailwind's default "normal" line-height so the user isn't forced
  *    to override it to ensure consistency even when using the default theme.
  */
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* 1 */
+  line-height: 1.5;
+  /* 2 */ }
 
 /**
  * 1. Prevent padding and border from affecting element width.
@@ -238,6 +257,9 @@
  * Reset links to optimize for opt-in styling instead of
  * opt-out.
  */
+a {
+  color: inherit;
+  text-decoration: inherit; }
 
 /**
  * Reset form element properties that are easy to forget to
@@ -268,4 +290,40 @@
  *
  * https://github.com/mozdevs/cssremedy/issues/14
  */
+
+.bg-yellow-600 {
+  --bg-opacity: 1;
+  background-color: #d69e2e;
+  background-color: rgba(214, 158, 46, var(--bg-opacity)); }
+
+.my-48 {
+  margin-top: 12rem;
+  margin-bottom: 12rem; }
+
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem; }
+
+.text-blue-300 {
+  --text-opacity: 1;
+  color: #90cdf4;
+  color: rgba(144, 205, 244, var(--text-opacity)); }
+
+body {
+  font-size: 20px;
+  color: #168638;
+  background-color: linen; }
+
+.myUniqueClass {
+  /*  background-color: rgb(59, 38, 52); */
+  color: #fff;
+  width: 300px;
+  padding: 5px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+.iDoNotExist {
+  color: red; }
 

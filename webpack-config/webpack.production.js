@@ -6,6 +6,11 @@
  * styles.
  * 
  * Configuration for Tailwinds in postcss.config.js
+ * 
+ * 
+ * Commands:
+ * - npm run build | builds uncompressed
+ * - nmp run production | minimized compressed
  */
 const path = require('path');
 const glob = require('glob-all');
@@ -85,6 +90,7 @@ module.exports = (env) => ({
         new PurgecssPlugin({
 
             paths: glob.sync([
+                "./index.php",
                 "./pages/**/*.php",
                 './views/a**/*.php'
             ])

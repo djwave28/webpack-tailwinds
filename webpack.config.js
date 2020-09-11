@@ -29,7 +29,7 @@ module.exports = env => {
 
     /** Set domain of local site */
     env.domain = 'webpack-tailwinds.local';
-    
+
     /** Set root dir */
     env.dirname = path.resolve(__dirname);
 
@@ -42,7 +42,7 @@ module.exports = env => {
 
             /** The entry array. Multiple files will be concatenated. */
             entry: {
-                'plugin': path.resolve(__dirname, `./${env.src}/index.js`)
+                'main': path.resolve(__dirname, `./${env.src}/index.js`)
             }
 
         },
