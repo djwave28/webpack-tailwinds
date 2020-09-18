@@ -29,8 +29,8 @@
         "postcss-loader": "^3.0.0",
         "purgecss-webpack-plugin": "^2.0.6",
         "sass-loader": "^8.0.2",
-        "tailwindcss": "^1.8.7",
-        "webpack": "^4.44.1",
+        "tailwindcss": "^1.8.10",
+        "webpack": "^4.44.2",
         "webpack-cli": "^3.3.11",
         "webpack-dev-server": "^3.10.3",
         "webpack-merge": "^4.2.2"

@@ -2,7 +2,7 @@
 // import css from './style.css';
 import sass from './style.scss';
 // import  sassa from './style_a.scss';
-// import  sassb from './style_b.scss';
+import  sassb from './style_b.scss';
 
 function component() {
   const element = document.createElement('div');
