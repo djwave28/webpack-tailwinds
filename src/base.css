@@ -1,0 +1,33 @@
+h1 {
+    color: #1bce66;
+}
+
+.does_not_exist {
+    color: red;
+    font-size: large;
+    display: block;
+    position: relative;
+    width: 400px;
+    height: 100px;
+    text-decoration: line-through;
+    padding: 20px;
+    background-color: bisque;
+    border-radius: 10px;
+    box-shadow: #b7c0bb 5px 5px 5px;
+    margin: 8px;
+}
+
+
+/* The following style definition will be purged by the PurgeCSS module */
+
+.does_exist {
+    @apply text-2xl font-bold;
+    color: rgb(56, 121, 156);
+    display: block;
+    font-size: 20px;
+    background-color: darkorange;
+    position: relative;
+    width: auto;
+    height: 100px;
+    padding: 20px;
+}

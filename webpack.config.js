@@ -1,51 +1,43 @@
 /**
  * WebPack Configuration File [webpack.config.js]
- * 
- * Choose the configuration to run in the package.json by setting 
- * the --env.mode parameter to development or production.
- * The targeted configuration is loaded.
- * 
- * Setting are loaded from webpack.config.js by changing
- * the env.* properties.
- * 
- * TailwindsCSS is included in postcss.config.js
- * 
- * ALL CONFIGURATION INSIDE THIS FILE
  */
-const path = require('path');
-const webpackMerge = require('webpack-merge');
 
+// const { log } = require("console");
+const path = require("path");
+const { merge } = require("webpack-merge");
+const env = require("cross-env");
 
 /** mode selector */
-const modeConfig = env => require(`./webpack-config/webpack.${env.config}.js`)(env);
+const modeConfig = (env) =>
+  require(`./webpack-config/webpack.${env.config}.js`)(env);
 
-module.exports = env => {
+module.exports = (env) => {
+  /** source folder  */
+  env.src = "src";
 
-    /** source folder  */
-    env.src = "src";
+  /** distribution folder  */
+  env.dist = "dist";
 
-    /** distribution folder  */
-    env.dist = "dist";
+  /** Set domain of local site */
+  env.domain = "webpack-tailwinds.local.com";
 
-    /** Set domain of local site */
-    env.domain = 'webpack-tailwinds.local';
+  /** Set port for development */
+  env.port = "8080";
 
-    /** Set root dir */
-    env.dirname = path.resolve(__dirname);
+  /** Set root dir */
+  env.dirname = path.resolve(__dirname);
 
-    return webpackMerge(
+  /** Default Configuration Object (partial) */
+  const commonConfig = {
+    // entry
+    entry: { main: path.resolve(__dirname, "./src/index") },
+    mode: env.mode,
+    devtool: false,
+  };
 
-        {
+  /** import configurtion specifics for development OR production */
+  const devConfig = modeConfig(env);
 
-            // set selected mode ineractively
-            mode: env.mode,
-
-            /** The entry array. Multiple files will be concatenated. */
-            entry: {
-                'main': path.resolve(__dirname, `./${env.src}/index.js`)
-            }
-
-        },
-        modeConfig(env),
-    );
+  /** merging default config with development or production*/
+  return merge(commonConfig, devConfig);
 };
