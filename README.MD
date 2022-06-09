@@ -1,6 +1,6 @@
 # webpack-tailwinds (webpack 5)
 
-## intro
+
 Some basic knowledge is assumed. This repository is the basis for a webpack 5 project with PHP.
 
 ## Basics:
